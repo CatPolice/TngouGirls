@@ -1,9 +1,9 @@
 //
 //  Constant.m
-//  AFNetworking-demo
+//  TngouGirls
 //
-//  Created by Jakey on 15/6/3.
-//  Copyright (c) 2015年 Jakey. All rights reserved.
+//  Created by runlin on 17/4/17.
+//  Copyright © 2017年 gavin. All rights reserved.
 //
 
 #define SYNTHESIZE_CONSTS

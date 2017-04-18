@@ -81,6 +81,7 @@ static APIManager *_sharedManager = nil;
         if (![responseObject objectForKey:@"error"]) {
             success(task.response,responseObject);
         }else{
+            
             [JKAlert showMessage:[responseObject objectForKey:[@"error" description]]];
             NSError *errorForJSON = [NSError errorWithDomain:@"接口出错" code:2015 userInfo:@{@"接口请求失败": [responseObject objectForKey:@"errorMsg"]?:@""}];
             NSLog(@"error%@",[errorForJSON description]);

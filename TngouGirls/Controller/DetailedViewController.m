@@ -30,7 +30,7 @@
     self.myWebView.UIDelegate = self;
     self.myWebView.navigationDelegate = self;
     [self.wkWebViewSuperView addSubview:self.myWebView];
-    NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:self.webUrl] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
+    NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:self.webUrl] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60];
     [self.myWebView loadRequest:request];
 }
 

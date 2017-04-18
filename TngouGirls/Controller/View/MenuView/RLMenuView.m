@@ -113,7 +113,7 @@
         if (buttonItem.tag == _currentIndex) {
             [self appleStyle:buttonItem];
         }
-        self.scrollView.contentSize = CGSizeMake(contentSize, 0);
+        self.scrollView.contentSize = CGSizeMake(contentSize+20, 0);
     }];
 }
 -(void)layoutSubviews{

@@ -14,6 +14,7 @@
 #import "MJRefresh.h"
 #import "ImageList.h"
 #import "DetailedViewController.h"
+#import "MBProgressHUD.h"
 
 static NSString *HomeCollectionViewCellidentifier = @"HomeCollectionViewCellidentifier";
 
@@ -46,13 +47,12 @@ static NSString *HomeCollectionViewCellidentifier = @"HomeCollectionViewCelliden
     [_collectionView setFrame:_collectionViewSuperView.bounds];
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-#pragma ======================
+#pragma ======================buildView============================
 - (void)buildMenuView{
     __weak typeof(self)weakSelf = self;
     [ImageCategory getImageCategory:nil Success:^(id responeObject, NSMutableArray *items) {
@@ -61,9 +61,6 @@ static NSString *HomeCollectionViewCellidentifier = @"HomeCollectionViewCelliden
         weakSelf.menuButton.items = [NSArray arrayWithArray:items];
         weakSelf.menuButton.xSpacing = 5;
         [weakSelf.menuButton selectIndex:0];
-        
-//        ImageCategory *obj = (ImageCategory *)[items firstObject];
-//        [weakSelf loadImageListFromCategory:@{@"id":obj.ID} withLoad:NO];
         
     } Failure:^(NSError *error) {
         
@@ -131,6 +128,8 @@ static NSString *HomeCollectionViewCellidentifier = @"HomeCollectionViewCelliden
 }
 
 
+#pragma mark =======================load data ========================================
+
 - (void)loadImageListFromCategory:(NSDictionary *)par withLoad:(BOOL)isLoad{
     
     NSMutableDictionary *p = [[NSMutableDictionary alloc] initWithDictionary:par];
@@ -142,7 +141,9 @@ static NSString *HomeCollectionViewCellidentifier = @"HomeCollectionViewCelliden
         [p setObject:[NSNumber numberWithInteger:(currentPage)] forKey:@"page"];
     }
     
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+
     [ImageList getImageList:p Success:^(id responeObject, NSMutableArray *items) {
         
         if (isLoad) {
@@ -153,10 +154,12 @@ static NSString *HomeCollectionViewCellidentifier = @"HomeCollectionViewCelliden
         currentPage = currentPage + 1;
         
         [_collectionView reloadData];
-        
         [_collectionView.mj_footer endRefreshing];
+        
+        [hud hide:YES];
     } Failure:^(NSError *error) {
         [_collectionView.mj_footer endRefreshing];
+        [hud hide:YES];
     }];
 }
 
